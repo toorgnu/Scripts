@@ -1,0 +1,11 @@
+#!/bin/bash 
+IFS=$'\n'
+
+mkdir "$HOME/convert2"
+webpName="0"
+files=`ls $HOME/convert/*.webp`
+for i in $files; do
+    dwebp "$i" -o "$HOME/convert2/$webpName.png"
+    echo "$webpName.png converted!"
+    ((webpName++))
+done
