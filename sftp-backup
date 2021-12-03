@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "df backup_$(date "+%Y-%m-%d") /dev/null" | sftp -b - fuser@172.**.16.91:/backups
+if [ $? -eq 0 ]
+then
+        echo "File exists"
+else
+        echo "File does not exist"
+        sftp -oPort=22 fuser@172.**.16.91:/backups << EOF
+                mkdir backup_$(date "+%Y-%m-%d")
+                cd  backup_$(date "+%Y-%m-%d")
+                put /backup/MyAsterisk.sql.gz
+                exit
+EOF
+fi
